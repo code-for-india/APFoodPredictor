@@ -7,6 +7,56 @@
 
 <link rel="stylesheet" href="style480.css"  media="screen and (max-device-width: 480px)"  />
 <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+
+<script type="text/javascript">
+
+jQuery(function() {
+
+    var csv_path = "data/kitchen.csv";
+
+    var renderCSVDropdown = function(csv) {
+        var dropdown = $('select#kitchen');
+        for(var i = 0; i < csv.length; i++) {
+            var record = csv[i];
+            var entry = $('<option>').attr('value', record.someProperty);
+            dropdown.append(entry);
+        }
+    };
+
+    $.get(csv_path, function(data) {
+        var csv = CSVToArray(data);
+        renderCSVDropdown(csv);
+    });
+
+}());
+
+
+
+
+jQuery(function() {
+
+    var csv_path = "data/fooditems.csv";
+
+    var renderCSVDropdown = function(csv) {
+        var dropdown = $('select#fooditems1');
+        for(var i = 0; i < csv.length; i++) {
+            var record = csv[i];
+            var entry = $('<option>').attr('value', record.someProperty);
+            dropdown.append(entry);
+        }
+    };
+
+    $.get(csv_path, function(data) {
+        var csv = CSVToArray(data);
+        renderCSVDropdown(csv);
+    });
+
+}());
+
+
+</script>
+
 
 </head>
 
@@ -59,17 +109,17 @@
     	
     <div class="clear"></div>
     	<div id="prediction-selection">
-        
-   	  <form id="sorting-sel">
+        <form name="basicpredictioncontrols" method="get" action="predictprocess.jsp">
+   	  <div id="sorting-sel">
             	<label>Region</label>
-            	<select id="location">
+            	<select id="location" name="Location">
                 	<option>Bangalore</option>
                 </select>
-        </form>
-          <form id="sorting-sel">          
+        </div>
+          <div id="sorting-sel">          
    
                  <label>Kitchen</label>
-            	<select id="kitchen">
+            	<select id="kitchen" name="Kitchen">
                 	<option>Old Madras Road</option>
                     <option>RMZ Infinity</option>
                     <option>National Institue of Tech</option>
@@ -77,46 +127,46 @@
                  <option>M.G. Road</option>
                 </select>
                 
-            </form>
+            </div>
                 
-            <form id="sorting-sel">    
+            <div id="sorting-sel">    
                   <label>Date</label>
-                 <input type="text" id="datepicker" value="Select Date">
+                 <input type="text" id="datepicker" name="Date">
                  
-            </form>
+            </div>
             
             
                  
-       <form id="sorting-sel">
+       <div id="sorting-sel">
        
                 <label>Food Item 1</label>
-            	<select id="school">
+            	<select id="school" name="FoodItem1">
                 	<option>CUSAT</option>
                     <option>MIT</option>
                     <option>Indian Institue of Tech</option>
                     <option>National Institue of Tech</option>
                 </select>
                 
-       </form>
+       </div>
         
         
-         <form id="sorting-sel">
+         <div id="sorting-sel">
        
                 <label>Food Item 2</label>
-            	<select id="school">
+            	<select id="school" name="FoodItem2">
                 	<option>CUSAT</option>
                     <option>MIT</option>
                     <option>Indian Institue of Tech</option>
                     <option>National Institue of Tech</option>
                 </select>
            
-        </form>        
-        <form id="sorting-sel">
+        </div>        
+        <div id="sorting-sel">
         
         
         <button id="result-button" class="bblue action">Simulate</button>
                 
-         </form>               
+         </div>               
  </form>
                 
           
@@ -127,14 +177,14 @@
 </div>
 </div>
 <!--End Container-->
-
+<script src="moment.js"></script>
 <script src="pikaday.js"></script>
     <script>
 
     // default: bottom left
   
     var picker = new Pikaday({ field: document.getElementById('datepicker'),
-					format: 'D MM'
+					format: 'DD-MM-YY'
 	 });
 </script>
 	
