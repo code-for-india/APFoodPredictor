@@ -11,9 +11,12 @@
 
 <script type="text/javascript">
 
-jQuery(function() {
 
-    var csv_path = "data/kitchen.csv";
+jQuery.noConflict();
+
+$(function() {
+
+    var csv_path = "data/kitchenlist.csv";
 
     var renderCSVDropdown = function(csv) {
         var dropdown = $('select#kitchen');
@@ -34,25 +37,6 @@ jQuery(function() {
 
 
 
-jQuery(function() {
-
-    var csv_path = "data/fooditems.csv";
-
-    var renderCSVDropdown = function(csv) {
-        var dropdown = $('select#fooditems1');
-        for(var i = 0; i < csv.length; i++) {
-            var record = csv[i];
-            var entry = $('<option>').attr('value', record.someProperty);
-            dropdown.append(entry);
-        }
-    };
-
-    $.get(csv_path, function(data) {
-        var csv = CSVToArray(data);
-        renderCSVDropdown(csv);
-    });
-
-}());
 
 
 </script>
@@ -120,11 +104,7 @@ jQuery(function() {
    
                  <label>Kitchen</label>
             	<select id="kitchen" name="Kitchen">
-                	<option>Old Madras Road</option>
-                    <option>RMZ Infinity</option>
-                    <option>National Institue of Tech</option>
-
-                 <option>M.G. Road</option>
+                	
                 </select>
                 
             </div>
@@ -140,11 +120,8 @@ jQuery(function() {
        <div id="sorting-sel">
        
                 <label>Food Item 1</label>
-            	<select id="school" name="FoodItem1">
-                	<option>CUSAT</option>
-                    <option>MIT</option>
-                    <option>Indian Institue of Tech</option>
-                    <option>National Institue of Tech</option>
+            	<select id="FoodItem1" name="FoodItem1">
+                	
                 </select>
                 
        </div>
@@ -153,11 +130,8 @@ jQuery(function() {
          <div id="sorting-sel">
        
                 <label>Food Item 2</label>
-            	<select id="school" name="FoodItem2">
-                	<option>CUSAT</option>
-                    <option>MIT</option>
-                    <option>Indian Institue of Tech</option>
-                    <option>National Institue of Tech</option>
+            	<select id="FoodItem2" name="FoodItem2">
+                	
                 </select>
            
         </div>        
