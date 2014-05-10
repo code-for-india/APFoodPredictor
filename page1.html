@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Untitled Document</title>
+<link rel="stylesheet" href="style.css" />
+
+<link rel="stylesheet" href="style480.css"  media="screen and (max-device-width: 480px)"  />
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+
+</head>
+
+<body>
+
+
+<div id="container">
+	<div id="header">
+    	
+    		<div id="h-left">
+            <img src="logo-min.jpg" />
+        	</div>
+        
+        	<div id="h-right">
+            <ul id="h-right-menu">
+            	Hello Athul,
+                <li><a href="#">Logout</a></li>
+            </ul>
+        	</div>
+       
+
+    
+  </div>
+    
+    
+<div class="clear"></div>  
+ <!--
+ <div id="main-menu">
+<ul id="main-menu-ul">
+	
+	<li><a href="#">Home</a></li>
+    <li><a href="#">Simulator</a></li>
+    
+</ul><!-- End Mainmenu
+
+</div>
+
+-->
+<div id="pg1-container">
+ <h2 style="text-align:center">Daily Food Simulator</h1>
+<div id="main-container" class="pg1">
+
+	
+    
+
+
+   <div class="clear"></div>
+   
+<div id="prediction-sort">
+    	
+    <div class="clear"></div>
+    	<div id="prediction-selection">
+        
+   	  <form id="sorting-sel">
+            	<label>Region</label>
+            	<select id="location">
+                	<option>Bangalore</option>
+                </select>
+        </form>
+          <form id="sorting-sel">          
+   
+                 <label>Kitchen</label>
+            	<select id="kitchen">
+                	<option>Old Madras Road</option>
+                    <option>RMZ Infinity</option>
+                    <option>National Institue of Tech</option>
+
+                 <option>M.G. Road</option>
+                </select>
+                
+            </form>
+                
+            <form id="sorting-sel">    
+                  <label>Date</label>
+                 <input type="text" id="datepicker" value="Select Date">
+                 
+            </form>
+            
+            
+                 
+       <form id="sorting-sel">
+       
+                <label>Food Item 1</label>
+            	<select id="school">
+                	<option>CUSAT</option>
+                    <option>MIT</option>
+                    <option>Indian Institue of Tech</option>
+                    <option>National Institue of Tech</option>
+                </select>
+                
+       </form>
+        
+        
+         <form id="sorting-sel">
+       
+                <label>Food Item 2</label>
+            	<select id="school">
+                	<option>CUSAT</option>
+                    <option>MIT</option>
+                    <option>Indian Institue of Tech</option>
+                    <option>National Institue of Tech</option>
+                </select>
+           
+        </form>        
+        <form id="sorting-sel">
+        
+        
+        <button id="result-button" class="bblue action">Simulate</button>
+                
+         </form>               
+ </form>
+                
+          
+            
+    </div>
+	
+</div>
+</div>
+</div>
+<!--End Container-->
+
+<script src="pikaday.js"></script>
+    <script>
+
+    // default: bottom left
+  
+    var picker = new Pikaday({ field: document.getElementById('datepicker'),
+					format: 'D MM'
+	 });
+</script>
+	
+	
+</body>
+</html>
