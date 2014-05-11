@@ -16,8 +16,14 @@ package com.google.api.services.samples.prediction.appengine;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -38,6 +44,7 @@ import com.google.api.services.prediction.model.Output;
 public class APFoodPredictorServlet extends
 		AbstractAppEngineAuthorizationCodeServlet {
 
+	private static final String LEARNING_DATASET = "fooddata3";
 	/**
 	 * Be sure to specify the name of your application. If the application name
 	 * is {@code null} or blank, the application will log a warning. Suggested
@@ -45,6 +52,7 @@ public class APFoodPredictorServlet extends
 	 */
 	private static final String APPLICATION_NAME = "gleaming-bus-576";
 	private static final String ID = "";
+	private static final Map<String, List<String>> kitchenToSchoolMap = new HashMap<String, List<String>>();
 
 	private static final long serialVersionUID = 1L;
 
@@ -60,21 +68,49 @@ public class APFoodPredictorServlet extends
 				Utils.JSON_FACTORY, credential).setApplicationName(
 				APPLICATION_NAME).build();
 
-		// Add the code to make an API call here.
-		Input input = new Input();
-		InputInput inputInput = new InputInput();
-		List<Object> params = new ArrayList<Object>();
-		params.add("GLPS- NELGULI,PUJA SAMBAR - 1200");
-		inputInput.setCsvInstance(params);
-		input.setInput(inputInput);
-		Output predict = prediction.trainedmodels()
-				.predict(APPLICATION_NAME, "fooddata40", input).execute();
+		String kitchen = req.getParameter("Kitchen");
+		String date = req.getParameter("Date");
+		String foodItem1 = req.getParameter("FoodItem1");
+		String foodItem2 = req.getParameter("FoodItem2");
 
+		List<String> schools = kitchenToSchoolMap.get(kitchen);
+
+		Double itemOneQuantity = 0.0;
+		Double itemTwoQuantity = 0.0;
+		for (String school : schools) {
+			itemOneQuantity =+ getPrediction(prediction, date, school, foodItem1);
+			itemTwoQuantity =+ getPrediction(prediction, date, school, foodItem2);
+		}
+		
 		// Send the results as the response
 		resp.setStatus(200);
 		resp.setContentType("text/html");
 		PrintWriter writer = resp.getWriter();
-		writer.println(predict);
+		writer.println(String.format("itemOneQuantity=%s, itemTwoQuantity=%s", itemOneQuantity, itemTwoQuantity));
+	}
+
+	private Double getPrediction(Prediction prediction, String dateStr,
+			String school, String foodItem) throws IOException {
+		Input input = new Input();
+		InputInput inputInput = new InputInput();
+		List<Object> params = new ArrayList<Object>();
+
+		Date date = new Date();
+		try {
+			date = new SimpleDateFormat("dd-mm-yy").parse(dateStr);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		String csvInput = String.format("Saturday, %s, %s", school, foodItem) ;
+		params.add(csvInput);
+		inputInput.setCsvInstance(params);
+		input.setInput(inputInput);
+		Output predict = prediction.trainedmodels()
+				.predict(APPLICATION_NAME, LEARNING_DATASET, input).execute();
+
+		String predOutputStr = predict.getOutputValue();
+		Double pridictedQuantity = Double.parseDouble(predOutputStr);
+		return pridictedQuantity;
 	}
 
 	@Override
@@ -87,5 +123,33 @@ public class APFoodPredictorServlet extends
 	protected String getRedirectUri(HttpServletRequest req)
 			throws ServletException, IOException {
 		return Utils.getRedirectUri(req);
+	}
+
+	@Override
+	public void init() throws ServletException {
+		// TODO Auto-generated method stub
+		super.init();
+		loadMasterData();
+	}
+
+	private void loadMasterData() {
+		List<String> schools = new ArrayList<String>();
+		schools.add("DAYANANDA HPS - BENDRENAGARA");
+		schools.add("DAYANADA HS - CHANDRA NAGARA");
+		schools.add("GHPS CHANDRA NAGAR");
+		schools.add("GHPS - KUMARASWAMY LAYOUT");
+		schools.add("GLPS-GOWDANAPALYA");
+		schools.add("GHPS-CHIKKALASANDRA");
+		schools.add("SRI BANASHANKARI HPS - BENDRENAGARA");
+		schools.add("BANASHANKARI  HS-BENDRE NAGARA");
+		schools.add("BHUVANESHSWARI HPS - BENDRENAGARA");
+		schools.add("GHPS- KADERNAHALLI");
+		schools.add("SAHAKARI VIDAY KENDRA HPS - PADMANABHANGARA");
+		schools.add("SAHAKARI VIDAY KENDRA HS - PADMANABHANGARA");
+		schools.add("GHPS- KATTRIGUPPE");
+		schools.add("GHPS- GIRINAGAR GUTTE");
+		schools.add("GHPS- VEERABHADRANAGARA");
+		
+		kitchenToSchoolMap.put("IND-13-VKH-009814", schools);
 	}
 }
