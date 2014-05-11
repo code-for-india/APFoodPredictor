@@ -55,7 +55,7 @@
 
 	<div id="main-prediction-header">
     	<!--<div id="right">Today's Expectation : <span id="tmrw-number">302</span></div>-->
-		<div id="left">Tommorow's Expectation : <span id="tmrw-number">${TommorrowExpectation}</span></div>
+		<div id="left">Expectation : <span id="tmrw-number">${TommorrowExpectation}</span></div>
     </div>
     
 
