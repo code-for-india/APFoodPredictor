@@ -62,11 +62,6 @@ public class APFoodPredictorServlet extends
 		// Get the stored credentials using the Authorization Flow
 		AuthorizationCodeFlow authFlow = initializeFlow();
 		Credential credential = authFlow.loadCredential(getUserId(req));
-		// Build the Prediction object using the credentials
-		@SuppressWarnings("unused")
-		Prediction prediction = new Prediction.Builder(Utils.HTTP_TRANSPORT,
-				Utils.JSON_FACTORY, credential).setApplicationName(
-				APPLICATION_NAME).build();
 
 		String kitchen = req.getParameter("Kitchen");
 		String date = req.getParameter("Date");
@@ -75,34 +70,37 @@ public class APFoodPredictorServlet extends
 
 		List<String> schools = kitchenToSchoolMap.get(kitchen);
 
-		Double itemOneQuantity = 0.0;
-		Double itemTwoQuantity = 0.0;
+		Double itemOneQuantity;
+		StringBuilder sb = new StringBuilder();
+		sb.append( "<link rel=\"stylesheet\" href=\"style.css\" /><table id=\"keywords\" cellspacing=\"0\" cellpadding=\"0\"> <thead> <tr> <th><span>School</span></th><th>Quantity</th> <tbody>");
 		for (String school : schools) {
-			itemOneQuantity =+ getPrediction(prediction, date, school, foodItem1);
-			itemTwoQuantity =+ getPrediction(prediction, date, school, foodItem2);
+			itemOneQuantity = getPrediction(credential, date, school, foodItem1);
+			getPrediction(credential, date, school, foodItem1);
+			sb.append(getHtmlRow(school, itemOneQuantity));
 		}
+		sb.append( "</tbody> </table>");
 		
 		// Send the results as the response
 		resp.setStatus(200);
 		resp.setContentType("text/html");
-		PrintWriter writer = resp.getWriter();
-		writer.println(String.format("itemOneQuantity=%s, itemTwoQuantity=%s", itemOneQuantity, itemTwoQuantity));
+		PrintWriter pw = resp.getWriter();
+		pw.write(String.format("%s\n",sb.toString() ));
+		
 	}
 
-	private Double getPrediction(Prediction prediction, String dateStr,
+	private Double getPrediction(Credential credential, String dateStr,
 			String school, String foodItem) throws IOException {
+		
+		Prediction prediction = new Prediction.Builder(Utils.HTTP_TRANSPORT,
+				Utils.JSON_FACTORY, credential).setApplicationName(
+				APPLICATION_NAME).build();
 		Input input = new Input();
 		InputInput inputInput = new InputInput();
 		List<Object> params = new ArrayList<Object>();
 
-		Date date = new Date();
-		try {
-			date = new SimpleDateFormat("dd-mm-yy").parse(dateStr);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		String csvInput = String.format("Saturday, %s, %s", school, foodItem) ;
-		params.add(csvInput);
+		params.add("Saturday");
+		params.add(school);
+		params.add(foodItem);
 		inputInput.setCsvInstance(params);
 		input.setInput(inputInput);
 		Output predict = prediction.trainedmodels()
@@ -151,5 +149,14 @@ public class APFoodPredictorServlet extends
 		schools.add("GHPS- VEERABHADRANAGARA");
 		
 		kitchenToSchoolMap.put("IND-13-VKH-009814", schools);
+	}
+	
+	private String getHtmlRow(String school, Double quantity) {
+		String row = String.format(
+				 "	      <tr>" + 
+				 "	        <td class=\"lalign\">%s</td>" + 
+				 "	        <td>%s</td>" + 
+				 "	      </tr>", school, quantity.intValue());
+		return row;
 	}
 }

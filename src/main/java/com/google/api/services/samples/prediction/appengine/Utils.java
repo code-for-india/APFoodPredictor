@@ -42,7 +42,7 @@ class Utils {
       AppEngineDataStoreFactory.getDefaultInstance();
 
   private static GoogleClientSecrets clientSecrets = null;
-  static final String MAIN_SERVLET_PATH = "/APFoodPredictor-Servlet";
+  static final String MAIN_SERVLET_PATH = "/Page1.html";
   static final String AUTH_CALLBACK_SERVLET_PATH = "/oauth2callback";
   static final HttpTransport HTTP_TRANSPORT = new UrlFetchTransport();
   static final JacksonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();

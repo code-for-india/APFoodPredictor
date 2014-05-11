@@ -10,7 +10,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
   </servlet>
   <servlet-mapping>
     <servlet-name>APFoodPredictorServlet</servlet-name>
-    <url-pattern>/APFoodPredictor-Servlet</url-pattern>
+    <url-pattern>/APFoodPredictor</url-pattern>
   </servlet-mapping>
 
   <servlet>

@@ -15,7 +15,7 @@ a { color:#39F; text-decoration:none; cursor:auto; padding:0; }
 a:hover { text-decoration:underline;}
 .limited-width {width:940px;}
 .clear { clear:both; }
-H1 {font-size:30px; color:; font-weight:100; letter-spacing:normal;}
+H1 {font-size:30px; color:#F33; font-weight:100; letter-spacing:normal;}
 H2 {font-size:24px; color:#393; font-weight:100; letter-spacing:normal;}
 
 
@@ -294,7 +294,7 @@ button-disabled {
 	
 	float:left;
 	width:100%;
-	padding:10px 10px 10px 10px;
+	padding:10px 10px 10px 0px;
 	
 
 }
@@ -305,6 +305,7 @@ button-disabled {
 	float:left;
 	margin:0 auto;
 	margin-top:20px;
+	
 	
 	
 }
@@ -346,6 +347,21 @@ button-disabled {
 }
 */
 
+
+#parameters {
+	display:inline-block;
+	color:#666;
+	font-size:16px;
+	float:left;
+	margin-bottom:5px
+}
+
+#parameters span {
+	display::inline-block;
+	color:#000;
+	font-size:16px;
+	font-weight:600;
+}
 
 #sorting-sel select {  
     -webkit-appearance: button;  
@@ -572,3 +588,29 @@ http://nicolasgallagher.com/micro-clearfix-hack/
     border-radius: 3px !important;
 }
 /** Pikadate**/
+
+
+
+/**Table Styles **/
+
+table { 
+  width: 100%; 
+  border-collapse: collapse; 
+}
+/* Zebra striping */
+tr:nth-of-type(odd) { 
+  background: #fff; 
+  color:#000;
+}
+th { 
+  background:#DCDCDC; 
+  color: #000; 
+  font-weight: bold; 
+  padding:10px 40px 10px 40px;
+}
+td, th { 
+  padding: 15px 40px 15px 40px ; 
+  border: 1px solid #ccc; 
+  text-align: left;
+   
+}
